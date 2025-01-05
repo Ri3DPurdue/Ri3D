@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
@@ -169,6 +170,9 @@ public class RobotContainer
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
+
+      driverXbox.leftTrigger(0.1).whileTrue(new RunCommand(() -> climber.setWinch(driverXbox.getLeftTriggerAxis() * -1), climber));
+      driverXbox.rightTrigger(0.1).whileTrue(new RunCommand(() -> climber.setWinch(driverXbox.getRightTriggerAxis()), climber));
     }
 
   }
