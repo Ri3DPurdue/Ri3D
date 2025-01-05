@@ -160,16 +160,25 @@ public class RobotContainer
     } else
     {
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
+      //driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       driverXbox.b().whileTrue(
           drivebase.driveToPose(
               new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
                               );
-      driverXbox.y().whileTrue(drivebase.aimAtSpeaker(2));
+      //driverXbox.y().whileTrue(drivebase.aimAtSpeaker(2));
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.povLeft().onTrue(new RunCommand(()->wrist.run(1), wrist))
+        .onFalse(new RunCommand(()->wrist.stop(), wrist));
+      driverXbox.povRight().onTrue(new RunCommand(()->wrist.run(-1), wrist))
+        .onFalse(new RunCommand(()->wrist.stop(), wrist));
+      
+      driverXbox.x().onTrue(new RunCommand(()->intake.run(1), intake))
+        .onFalse(new RunCommand(()->intake.stop(), intake));
+      driverXbox.y().onTrue(new RunCommand(()->intake.run(-1), intake))
+        .onFalse(new RunCommand(()->intake.stop(), intake));
 
       driverXbox.leftTrigger(0.1).whileTrue(new RunCommand(() -> climber.setWinch(driverXbox.getLeftTriggerAxis() * -1), climber));
       driverXbox.rightTrigger(0.1).whileTrue(new RunCommand(() -> climber.setWinch(driverXbox.getRightTriggerAxis()), climber));
