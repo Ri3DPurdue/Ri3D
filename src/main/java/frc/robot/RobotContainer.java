@@ -38,12 +38,12 @@ public class RobotContainer
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
   // The robot's subsystems and commands are defined here...
-  private final ClimberSubsystem climber = new ClimberSubsystem(11);
-  private final ArmSubsystem arm = new ArmSubsystem(12);
+  // private final ClimberSubsystem climber = new ClimberSubsystem(11);
+  // private final ArmSubsystem arm = new ArmSubsystem(12);
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
-  private final IntakeSubsystem intake = new IntakeSubsystem();
-  private final WristSubsystem wrist = new WristSubsystem();
+  // private final IntakeSubsystem intake = new IntakeSubsystem();
+  // private final WristSubsystem wrist = new WristSubsystem();
   // Applies deadbands and inverts controls because joysticks
   // are back-right positive while robot
   // controls are front-left positive
@@ -171,21 +171,21 @@ public class RobotContainer
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
-      driverXbox.povLeft().onTrue(new RunCommand(()->wrist.run(1), wrist))
-        .onFalse(new RunCommand(()->wrist.stop(), wrist));
-      driverXbox.povRight().onTrue(new RunCommand(()->wrist.run(-1), wrist))
-        .onFalse(new RunCommand(()->wrist.stop(), wrist));
+      // driverXbox.povLeft().onTrue(new RunCommand(()->wrist.run(1), wrist))
+      //   .onFalse(new RunCommand(()->wrist.stop(), wrist));
+      // driverXbox.povRight().onTrue(new RunCommand(()->wrist.run(-1), wrist))
+      //   .onFalse(new RunCommand(()->wrist.stop(), wrist));
       
-      driverXbox.x().onTrue(new RunCommand(()->intake.run(1), intake))
-        .onFalse(new RunCommand(()->intake.stop(), intake));
-      driverXbox.y().onTrue(new RunCommand(()->intake.run(-1), intake))
-        .onFalse(new RunCommand(()->intake.stop(), intake));
+      // driverXbox.x().onTrue(new RunCommand(()->intake.run(1), intake))
+      //   .onFalse(new RunCommand(()->intake.stop(), intake));
+      // driverXbox.y().onTrue(new RunCommand(()->intake.run(-1), intake))
+      //   .onFalse(new RunCommand(()->intake.stop(), intake));
 
-      //Climber control
-      driverXbox.leftTrigger(0.1).whileTrue(new RunCommand(() -> climber.setWinch(driverXbox.getLeftTriggerAxis() * -1), climber))
-        .onFalse(new InstantCommand(() -> climber.winchStop(), climber));
-      driverXbox.rightTrigger(0.1).whileTrue(new RunCommand(() -> climber.setWinch(driverXbox.getRightTriggerAxis()), climber))
-       .onFalse(new InstantCommand(() -> climber.winchStop(), climber));
+      // //Climber control
+      // driverXbox.leftTrigger(0.1).whileTrue(new RunCommand(() -> climber.setWinch(driverXbox.getLeftTriggerAxis() * -1), climber))
+      //   .onFalse(new InstantCommand(() -> climber.winchStop(), climber));
+      // driverXbox.rightTrigger(0.1).whileTrue(new RunCommand(() -> climber.setWinch(driverXbox.getRightTriggerAxis()), climber))
+      //  .onFalse(new InstantCommand(() -> climber.winchStop(), climber));
     }
 
   }
